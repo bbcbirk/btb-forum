@@ -2,7 +2,7 @@
 /**
  * BTB Forum
  *
- * @package           PluginPackage
+ * @package           BtbForum
  * @author            Birk Thestrup Blauner
  * @copyright         2019 Your Name or Company Name
  * @license           GPL-2.0-or-later
@@ -28,29 +28,17 @@ class BtbForum {
     }
 
     function activate() {
-        //generate a CPT
         $this->add_forum_member_role();
         $this->custom_post_type();
-        //generate a role
         //generate a plugin page with fields
-        // flush rewrite rules
         flush_rewrite_rules();
     }
 
     function deactivate() {
 
         remove_role('forum_member');
-        //flush rewrite rules
         flush_rewrite_rules();
 
-    }
-
-    function uninstall() {
-        //delete cpt
-        //delete role
-        //delete fields
-
-        //delete all plugin data from db
     }
 
     function add_forum_member_role() {
@@ -68,7 +56,14 @@ class BtbForum {
     }
 
     function custom_post_type() {
-        register_post_type( 'book', ['public' => true, 'label' => 'books'] );
+        register_post_type('book', ['public' => true, 'label' => 'books']);
+        
+        //test
+        global $wpdb;
+        $rows = $wpdb->get_results("SELECT user_id FROM {$wpdb->prefix}usermeta WHERE meta_value = 'a:1:{s:12:\"forum_member\";b:1;}'");
+        foreach( $rows as $result ) {
+            echo $result->user_id;
+        }
     }
 }
 
@@ -81,5 +76,3 @@ register_activation_hook( __FILE__, array($btbForum, 'activate') );
 
 // Deactivation
 register_deactivation_hook( __FILE__, array($btbForum, 'deactivate') );
-
-// Unistall
