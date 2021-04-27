@@ -4,7 +4,6 @@
  *
  * @package           BtbForum
  * @author            Birk Thestrup Blauner
- * @copyright         2019 Your Name or Company Name
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
@@ -57,13 +56,6 @@ class BtbForum {
 
     function custom_post_type() {
         register_post_type('book', ['public' => true, 'label' => 'books']);
-        
-        //test
-        global $wpdb;
-        $rows = $wpdb->get_results("SELECT user_id FROM {$wpdb->prefix}usermeta WHERE meta_value = 'a:1:{s:12:\"forum_member\";b:1;}'");
-        foreach( $rows as $result ) {
-            echo $result->user_id;
-        }
     }
 }
 
